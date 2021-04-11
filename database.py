@@ -43,14 +43,17 @@ class DatabaseControl:
 
     def commit(self):
         self.conn.commit()
-
     def close(self):
         self.conn.close()
 
 if __name__ == '__main__':
     db = DatabaseControl(host='127.0.0.1', passwd='123456', user='ysl', dbname='mkpicture')
-    sql = '''INSERT INTO divnum(id,name,order_num,create_date) VALUES (18,"BABY秀",10,"2012-03-28 23:52:39")'''
-    print(db.connect())
-    print(db.insertInToDB(sql))
-    db.commit()
+    db.connect()
+    sql = "SELECT update_time from content order by update_time desc "
+    db.cursor.execute(sql)
+    ldt = db.cursor.fetchone()
+    t = datetime.datetime.strptime(ldt[0],"%Y-%m-%d %H:%M:%S")
+    t2 = datetime.datetime.now()
+    print(t<t2)
+
 
